@@ -422,31 +422,39 @@ h2 {
 
 .work-section { position: relative; }
 
-/* מסלול גלילה: הסקשן גבוה, התוכן נדבק למסך והטלפונים עולים בתוכו */
-.work-track {
+/* במה בגובה מסך: הטלפונים מוחלטים בתוכה ונחתכים בגבולותיה; בלי sticky — הגלילה זורמת */
+.work-stage {
   position: relative;
-  height: 220vh;
-}
-
-.work-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden; /* הטלפונים נחתכים בגבולות הסקשן — לא זולגים החוצה */
+  min-height: 100vh;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 90px 6vw;
 }
 
 .work-center {
   position: relative;
   z-index: 2;
-  max-width: 640px;
+  max-width: 720px;
   width: 100%;
   min-width: 0;
   text-align: center;
-  padding: 0 6vw;
 }
+
+/* הילה רכה מאחורי הטקסט כדי שיישאר קריא מעל הטלפונים */
+.work-center::before {
+  content: '';
+  position: absolute;
+  inset: -12% -18%;
+  z-index: -1;
+  background: radial-gradient(ellipse at center, rgba(241, 240, 237, 0.96) 35%, rgba(241, 240, 237, 0) 72%);
+}
+
+/* גודל הטלפונים יחסי לרוחב המסך — לא חופפים בטאבלט/לפטופ */
+.floating-phone { width: clamp(96px, 11vw, 185px); }
+.ph-r2, .ph-l2 { width: clamp(84px, 9.5vw, 160px); }
+.ph-r3, .ph-l3 { width: clamp(80px, 9vw, 150px); }
 
 .work-kicker {
   color: var(--primary);
@@ -457,9 +465,10 @@ h2 {
 }
 
 .work-punch {
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(1.75rem, 3.2vw, 2.8rem);
+  font-weight: 900;
   margin: 0 0 16px;
-  line-height: 1.2;
+  line-height: 1.18;
 }
 
 .work-sub {
@@ -830,35 +839,22 @@ h2 {
   perspective: 1000px;
 }
 
+/* עיגול רך ובהיר (לבנדר) שנמס כלפי מטה — כמו ברפרנס; שמעון יוצא ממנו מעט */
 .about-circle {
   position: absolute;
   left: 50%;
-  bottom: 7%;
-  width: 78%;
+  bottom: 0;
+  width: 88%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--grad);
-  box-shadow: 0 30px 80px rgba(124, 58, 237, 0.35), inset 0 -20px 40px rgba(79, 70, 229, 0.35);
-  transform: translate(calc(-50% + var(--px) * -14px), calc(var(--py) * -10px)) scale(1);
+  background: radial-gradient(circle at 50% 30%, #EFE7FF 0%, #E4D8FF 55%, #DCCBFF 100%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 38%);
+  mask-image: linear-gradient(to top, transparent 0, #000 38%);
+  transform: translate(calc(-50% + var(--px) * -10px), calc(var(--py) * -8px)) scale(1);
   transition: transform 0.25s ease-out, opacity 0.7s ease-out;
 }
 
-.about-ring {
-  position: absolute;
-  left: 50%;
-  bottom: 1%;
-  width: 92%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1.5px dashed rgba(124, 58, 237, 0.35);
-  transform: translateX(-50%);
-  animation: ringSpin 60s linear infinite;
-}
-
-@keyframes ringSpin {
-  from { transform: translateX(-50%) rotate(0deg); }
-  to { transform: translateX(-50%) rotate(360deg); }
-}
+.about-ring { display: none; }
 
 .about-cut {
   position: absolute;
@@ -868,16 +864,16 @@ h2 {
 
 .about-person {
   position: absolute;
-  bottom: 3%;
+  bottom: 2%;
   left: 50%;
-  width: 104%;
+  width: 100%;
   max-width: none;
-  transform: translate(calc(-50% + var(--px) * 18px), calc(var(--py) * 12px)) rotateY(calc(var(--px) * 8deg));
+  transform: translate(calc(-50% + var(--px) * 14px), calc(var(--py) * 10px)) rotateY(calc(var(--px) * 6deg));
   transform-origin: 50% 80%;
-  filter: drop-shadow(0 26px 40px rgba(17, 17, 22, 0.28));
+  filter: drop-shadow(0 22px 34px rgba(17, 17, 22, 0.22));
   /* הגוף "נמס" בתחתית לתוך העיגול במקום קו חיתוך ישר */
-  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 16%);
-  mask-image: linear-gradient(to top, transparent 0, #000 16%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 22%);
+  mask-image: linear-gradient(to top, transparent 0, #000 22%);
   transition: transform 0.25s ease-out, opacity 0.7s ease-out;
 }
 
@@ -1253,14 +1249,38 @@ h2 {
   .hamburger { display: flex; }
 
   .floating-phone { display: none; }
-  .work-track { height: auto; }
-  .work-sticky {
-    position: static;
-    height: auto;
-    overflow: visible;
-    padding: 90px 0;
-  }
+  .work-stage { min-height: 0; padding: 90px 6vw; overflow: visible; }
+  .work-center::before { display: none; }
   .reel-carousel { display: flex; }
+
+  /* הירו במובייל: הטקסט למעלה, הסרטון (האגוז + האייקונים) בחצי התחתון, עם מעבר רך ביניהם */
+  .hero { min-height: 0; height: 100svh; }
+  .hero-video {
+    top: auto;
+    bottom: 0;
+    height: 56%;
+    object-position: 40% 60%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 44%;
+    height: 22%;
+    background: linear-gradient(to bottom, var(--bg-main), rgba(250, 250, 248, 0));
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-content { align-items: flex-start; padding: 96px 6vw 0; }
+  .hero-text p.lead { font-size: 1.05rem; margin-bottom: 22px; }
+  .hero-ctas { gap: 10px; margin-bottom: 20px; }
+  .hero-ctas .btn { padding: 13px 26px; font-size: 0.98rem; }
+  .trust-row { font-size: 0.88rem; gap: 6px 16px; }
+  .trust-row b { font-size: 1.05rem; }
+
+  /* אנימציית התהליך במובייל: כניסה מלמטה (הזזה אופקית גלשה מהמסך) */
+  .process-animate .step-content { --from: 0; transform: translateY(18px); }
+  .about-stage { width: min(360px, 88vw); }
 
   .process-line, .process-fill { right: 27px; transform: none; }
   .process-step {

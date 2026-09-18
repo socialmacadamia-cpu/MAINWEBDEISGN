@@ -189,7 +189,7 @@
 
   /* ---------- עבודות: טלפונים מרחפים — עולים בעדינות עם הגלילה ---------- */
 
-  const workTrack = document.querySelector('.work-track');
+  const workStage = document.querySelector('.work-stage');
   const processSection = document.getElementById('process');
   const phones = [...document.querySelectorAll('.floating-phone')];
 
@@ -202,14 +202,14 @@
 
   function onScrollEffects() {
     // טלפונים מרחפים (דסקטופ בלבד): בלי כניסות — דריפט עדין כלפי מעלה, כל אחד בקצב אחר
-    if (!reducedMotion && !mobileQuery.matches && phones.length && workTrack) {
-      const r = workTrack.getBoundingClientRect();
-      const total = Math.max(1, r.height - innerHeight);
-      const p = Math.max(0, Math.min(1, -r.top / total));
+    if (!reducedMotion && !mobileQuery.matches && phones.length && workStage) {
+      const r = workStage.getBoundingClientRect();
+      // p: 0 כשהסקשן נכנס מלמטה, 1 כשהוא יוצא למעלה — תנועה רציפה, בלי הצמדה
+      const p = Math.max(0, Math.min(1, (innerHeight - r.top) / (innerHeight + r.height)));
       phones.forEach(el => {
         const speed = +el.dataset.speed || 1;
-        // טווח קטן (~14vh בסיס): מתחילים מעט נמוך ועולים בעדינות. כל טלפון בקצב שלו.
-        const ty = (0.5 - p) * 14 * speed;
+        // טווח קטן (~16vh בסיס): מתחילים מעט נמוך ועולים בעדינות. כל טלפון בקצב שלו.
+        const ty = (0.5 - p) * 16 * speed;
         el.style.transform = 'translateY(' + ty.toFixed(2) + 'vh)';
       });
     }
