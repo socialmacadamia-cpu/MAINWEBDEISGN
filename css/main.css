@@ -31,7 +31,7 @@ body {
   font-family: var(--font-hebrew);
   background: var(--bg-main);
   color: var(--text-main);
-  overflow-x: hidden;
+  overflow-x: clip; /* clip ולא hidden — hidden שובר position:sticky */
 }
 
 a { color: var(--primary); text-decoration: none; }

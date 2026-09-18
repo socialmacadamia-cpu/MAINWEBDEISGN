@@ -176,14 +176,15 @@
   if (processTimeline && !reducedMotion) processTimeline.classList.add('process-animate');
 
   function onScrollEffects() {
-    // טלפונים מרחפים (דסקטופ בלבד): בלי כניסות — רק דריפט למעלה עם הגלילה
+    // טלפונים מרחפים (דסקטופ בלבד): בלי כניסות — דריפט עדין כלפי מעלה, כל אחד בקצב אחר
     if (!reducedMotion && !mobileQuery.matches && phones.length && workTrack) {
       const r = workTrack.getBoundingClientRect();
       const total = Math.max(1, r.height - innerHeight);
       const p = Math.max(0, Math.min(1, -r.top / total));
       phones.forEach(el => {
         const speed = +el.dataset.speed || 1;
-        const ty = (0.5 - p) * 55 * speed; // vh: מתחיל נמוך, עולה בעדינות
+        // טווח קטן (~14vh בסיס): מתחילים מעט נמוך ועולים בעדינות. כל טלפון בקצב שלו.
+        const ty = (0.5 - p) * 14 * speed;
         el.style.transform = 'translateY(' + ty.toFixed(2) + 'vh)';
       });
     }
