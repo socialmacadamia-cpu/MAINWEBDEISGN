@@ -412,34 +412,62 @@ h2 {
   transform: translateZ(14px);
 }
 
-/* ---------- עבודות + טלפונים צפים ---------- */
+/* ---------- עבודות + טלפונים מרחפים ---------- */
 
 .work-section { position: relative; }
 
-.work-inner {
+/* מסלול גלילה: הסקשן גבוה, התוכן נדבק למסך והטלפונים עולים בתוכו */
+.work-track {
   position: relative;
-  min-height: 150vh;
+  height: 220vh;
+}
+
+.work-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden; /* הטלפונים נחתכים בגבולות הסקשן — לא זולגים החוצה */
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 80px 6vw;
 }
 
 .work-center {
   position: relative;
   z-index: 2;
-  max-width: 560px;
+  max-width: 640px;
   width: 100%;
   min-width: 0;
+  text-align: center;
+  padding: 0 6vw;
+}
+
+.work-kicker {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  margin: 0 0 14px;
+}
+
+.work-punch {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin: 0 0 16px;
+  line-height: 1.2;
+}
+
+.work-sub {
+  color: var(--text-sub);
+  font-size: 1.12rem;
+  line-height: 1.7;
+  margin: 0 0 30px;
 }
 
 .floating-phone {
-  position: fixed;
-  z-index: 60;
+  position: absolute;
+  z-index: 1;
   pointer-events: none;
-  opacity: 0;
+  will-change: transform;
 }
 
 .phone-frame {
@@ -643,6 +671,25 @@ h2 {
   background: var(--grad);
   color: #fff;
   box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+  animation: badgePop 0.45s ease-out;
+}
+
+@keyframes badgePop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* שורות הטקסט של התהליך נכנסות כשהקו הסגול מגיע אליהן (רק כש-JS פעיל) */
+.process-animate .step-content {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+
+.process-animate .process-step.lit .step-content {
+  opacity: 1;
+  transform: none;
 }
 
 /* ---------- חבילות ---------- */
@@ -1097,7 +1144,13 @@ h2 {
   .hamburger { display: flex; }
 
   .floating-phone { display: none; }
-  .work-inner { min-height: 0; padding: 90px 6vw; }
+  .work-track { height: auto; }
+  .work-sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding: 90px 0;
+  }
   .reel-carousel { display: flex; }
 
   .process-line, .process-fill { right: 27px; transform: none; }

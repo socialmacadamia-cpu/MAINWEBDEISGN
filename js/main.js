@@ -162,46 +162,42 @@
     cio.observe(countersSection);
   }
 
-  /* ---------- עבודות: טלפונים צפים לפי התקדמות גלילה ---------- */
+  /* ---------- עבודות: טלפונים מרחפים — עולים בעדינות עם הגלילה ---------- */
 
-  const workSection = document.getElementById('work');
+  const workTrack = document.querySelector('.work-track');
   const processSection = document.getElementById('process');
   const phones = [...document.querySelectorAll('.floating-phone')];
 
-  /* ---------- התהליך: מילוי קו + הדלקת תחנות ---------- */
+  /* ---------- התהליך: מילוי קו + הדלקת תחנות + כניסת טקסט ---------- */
 
   const procFill = document.getElementById('procFill');
   const badges = [...document.querySelectorAll('.step-badge')];
+  const processTimeline = document.querySelector('.process-timeline');
+  if (processTimeline && !reducedMotion) processTimeline.classList.add('process-animate');
 
   function onScrollEffects() {
-    // טלפונים צפים (דסקטופ בלבד)
-    if (!reducedMotion && !mobileQuery.matches && phones.length && workSection && processSection) {
-      const a = workSection.getBoundingClientRect();
-      const b = processSection.getBoundingClientRect();
-      const total = Math.max(1, b.bottom - a.top);
-      const p = (innerHeight * 0.9 - a.top) / total;
+    // טלפונים מרחפים (דסקטופ בלבד): בלי כניסות — רק דריפט למעלה עם הגלילה
+    if (!reducedMotion && !mobileQuery.matches && phones.length && workTrack) {
+      const r = workTrack.getBoundingClientRect();
+      const total = Math.max(1, r.height - innerHeight);
+      const p = Math.max(0, Math.min(1, -r.top / total));
       phones.forEach(el => {
-        const kIn = +el.dataset.in || 0;
-        if (p <= kIn || p >= 1.08) { el.style.opacity = '0'; return; }
-        const fadeIn = Math.min(1, (p - kIn) / 0.12);
-        const fadeOut = p > 0.92 ? Math.max(0, (1.08 - p) / 0.16) : 1;
-        el.style.opacity = String(Math.min(fadeIn, fadeOut));
-        const k = +el.dataset.k || 0;
-        const ty = (p - 0.5) * (90 + k * 260) + (1 - fadeIn) * 40;
-        const rz = (+el.dataset.rot || 0) + (p - 0.5) * 14 * (k > 0.25 ? -1 : 1);
-        const ry = Math.sin(p * Math.PI * 1.5 + k * 7) * 14;
-        el.style.transform =
-          'perspective(1100px) translateY(' + ty + 'px) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg)';
+        const speed = +el.dataset.speed || 1;
+        const ty = (0.5 - p) * 55 * speed; // vh: מתחיל נמוך, עולה בעדינות
+        el.style.transform = 'translateY(' + ty.toFixed(2) + 'vh)';
       });
     }
 
-    // קו התהליך
+    // קו התהליך + הדלקת תחנות + חשיפת שורות הטקסט
     if (processSection && procFill) {
       const r = processSection.getBoundingClientRect();
       const pp = Math.max(0, Math.min(1, (innerHeight * 0.65 - r.top) / r.height));
       procFill.style.height = (pp * 100) + '%';
       badges.forEach((el, i) => {
-        el.classList.toggle('on', pp >= (i + 0.55) / badges.length);
+        const on = pp >= (i + 0.55) / badges.length;
+        el.classList.toggle('on', on);
+        const step = el.closest('.process-step');
+        if (step && on) step.classList.add('lit'); // נשאר חשוף גם בגלילה חזרה למעלה
       });
     }
   }
