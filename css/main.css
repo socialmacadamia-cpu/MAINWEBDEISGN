@@ -397,6 +397,12 @@ h2 {
   box-shadow: 0 8px 20px rgba(124, 58, 237, 0.12);
 }
 
+.service-icon img {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
 .service-card h3 {
   font-size: 1.15rem;
   font-weight: 800;
@@ -680,16 +686,61 @@ h2 {
   100% { transform: scale(1); }
 }
 
-/* שורות הטקסט של התהליך נכנסות כשהקו הסגול מגיע אליהן (רק כש-JS פעיל) */
+/* כניסת שלבי התהליך: הטקסט מחליק מהצד שלו עם blur שמתבהר, בסטאגר; האייקון "נפצח" פנימה (רק כש-JS פעיל) */
 .process-animate .step-content {
+  --from: 40px;
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+  filter: blur(6px);
+  transform: translateX(var(--from));
+  transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.7s;
 }
+.process-animate .step-content:last-child { --from: -40px; } /* תוכן בצד שמאל נכנס משמאל */
 
-.process-animate .process-step.lit .step-content {
+.process-animate .step-content > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.process-animate .step-content > :nth-child(1) { transition-delay: 0.12s; }
+.process-animate .step-content > :nth-child(2) { transition-delay: 0.22s; }
+.process-animate .step-content > :nth-child(3) { transition-delay: 0.34s; }
+
+.process-animate .process-step.lit .step-content,
+.process-animate .process-step.lit .step-content > * {
   opacity: 1;
   transform: none;
+  filter: none;
+}
+
+/* קו קטן שנמתח ליד המספר */
+.step-num { display: flex; align-items: center; gap: 8px; }
+.step-num::after {
+  content: '';
+  height: 2px;
+  width: 0;
+  border-radius: 2px;
+  background: var(--grad);
+  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s;
+}
+.process-step.lit .step-num::after { width: 28px; }
+
+/* האייקון בתחנה מסתובב-נכנס, וגל אור מתפשט מהתחנה כשהיא נדלקת */
+.step-badge svg {
+  transform: rotate(-30deg) scale(0.7);
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.step-badge.on svg { transform: none; }
+.step-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0;
+}
+.step-badge.on::after { animation: badgeRing 0.9s ease-out; }
+@keyframes badgeRing {
+  0% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.45); opacity: 1; }
+  100% { box-shadow: 0 0 0 26px rgba(124, 58, 237, 0); opacity: 0; }
 }
 
 /* ---------- חבילות ---------- */
@@ -769,17 +820,75 @@ h2 {
   align-items: center;
 }
 
-.about-photo {
-  aspect-ratio: 4 / 5;
-  max-width: 440px;
-  border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(17, 17, 22, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+/* במה תלת-ממדית: עיגול גרדיאנט מאחור, שמעון (cutout) "יוצא" מתוכו החוצה */
+.about-stage {
+  --px: 0; --py: 0;
+  position: relative;
+  width: min(460px, 100%);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  perspective: 1000px;
 }
-.about-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.about-circle {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--grad);
+  box-shadow: 0 30px 80px rgba(124, 58, 237, 0.35), inset 0 -20px 40px rgba(79, 70, 229, 0.35);
+  transform: translate(calc(-50% + var(--px) * -14px), calc(var(--py) * -10px)) scale(1);
+  transition: transform 0.25s ease-out, opacity 0.7s ease-out;
+}
+
+.about-ring {
+  position: absolute;
+  left: 50%;
+  bottom: 1%;
+  width: 92%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(124, 58, 237, 0.35);
+  transform: translateX(-50%);
+  animation: ringSpin 60s linear infinite;
+}
+
+@keyframes ringSpin {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+
+.about-cut {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.about-person {
+  position: absolute;
+  bottom: 3%;
+  left: 50%;
+  width: 104%;
+  max-width: none;
+  transform: translate(calc(-50% + var(--px) * 18px), calc(var(--py) * 12px)) rotateY(calc(var(--px) * 8deg));
+  transform-origin: 50% 80%;
+  filter: drop-shadow(0 26px 40px rgba(17, 17, 22, 0.28));
+  /* הגוף "נמס" בתחתית לתוך העיגול במקום קו חיתוך ישר */
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 16%);
+  mask-image: linear-gradient(to top, transparent 0, #000 16%);
+  transition: transform 0.25s ease-out, opacity 0.7s ease-out;
+}
+
+/* כניסה: העיגול מתנפח, ואז שמעון עולה מתוכו */
+.about-stage:not(.revealed) .about-circle { transform: translate(-50%, 0) scale(0.55); opacity: 0; }
+.about-stage:not(.revealed) .about-person { transform: translate(-50%, 70px); opacity: 0; }
+.about-stage.revealed .about-circle { transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s; }
+.about-stage.revealed .about-person { transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s, opacity 0.6s 0.25s; }
+/* אחרי הכניסה — מעבר קצר בשביל הפרלקסה של העכבר */
+.about-stage.revealed.settled .about-circle,
+.about-stage.revealed.settled .about-person { transition: transform 0.25s ease-out; }
 
 .about-section h3 { font-size: 1.2rem; font-weight: 800; margin: 0 0 16px; }
 

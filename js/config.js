@@ -15,14 +15,13 @@ window.SITE_CONFIG = {
   facebookUrl: '',
 
   // הירו: באיזה אחוז מאורך הסרטון לעצור (הפריים שבו הלוגואים באוויר)
-  heroFreezePct: 85,
+  heroFreezePct: 72,
 
   // מונים — הערכים הסופיים. null = עדיין placeholder
   counters: {
     views: { value: 7, suffix: 'M+', label: 'הצפיות שפיצחנו' },
     likes: { value: 500, suffix: 'K+', label: 'לייקים שאספנו' },
-    comments: { value: 20, suffix: 'K+', label: 'תגובות שקיבלו העסקים שלנו' },
-    activeClients: { value: null, suffix: '', label: 'לקוחות פעילים' } // [X] עד שיהיה מספר אמיתי
+    comments: { value: 20, suffix: 'K+', label: 'תגובות שקיבלו העסקים שלנו' }
   },
 
   // רילים לסקשן העבודות. שתי אפשרויות לכל ריל:
