@@ -25,16 +25,17 @@ window.SITE_CONFIG = {
     activeClients: { value: null, suffix: '', label: 'לקוחות פעילים' } // [X] עד שיהיה מספר אמיתי
   },
 
-  // רילים לסקשן העבודות. כשיש קבצים אמיתיים:
-  // { src: 'assets/reels/reel-1.mp4', client: 'שם הלקוח', views: '1.2M' }
-  // כל עוד src ריק — מוצג placeholder מסומן.
+  // רילים לסקשן העבודות. שתי אפשרויות לכל ריל:
+  //   תמונה בלבד (קל! מומלץ): { img: 'assets/reels/reel-1.webp', client: 'שם הלקוח', views: '1.2M', link: 'לינק לריל באינסטגרם (אופציונלי)' }
+  //   וידאו (נטען רק ב-hover):  { src: 'assets/reels/reel-1.mp4', img: 'תמונת פתיחה', client: '...', views: '...' }
+  // כל עוד הכל ריק — מוצג placeholder מסומן.
   reels: [
-    { src: '', client: '', views: '' },
-    { src: '', client: '', views: '' },
-    { src: '', client: '', views: '' },
-    { src: '', client: '', views: '' },
-    { src: '', client: '', views: '' },
-    { src: '', client: '', views: '' }
+    { img: '', src: '', client: '', views: '', link: '' },
+    { img: '', src: '', client: '', views: '', link: '' },
+    { img: '', src: '', client: '', views: '', link: '' },
+    { img: '', src: '', client: '', views: '', link: '' },
+    { img: '', src: '', client: '', views: '', link: '' },
+    { img: '', src: '', client: '', views: '', link: '' }
   ],
 
   // לוגואי לקוחות ל-marquee. כשיש קבצים:

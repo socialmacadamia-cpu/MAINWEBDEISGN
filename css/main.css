@@ -460,7 +460,8 @@ h2 {
   overflow: hidden;
 }
 
-.phone-screen video {
+.phone-screen video,
+.phone-screen img {
   position: absolute;
   inset: 0;
   width: 100%;

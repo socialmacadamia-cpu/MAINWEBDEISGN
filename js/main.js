@@ -220,19 +220,36 @@
   /* ---------- רילים: הזרקת תוכן אמיתי מהקונפיג ---------- */
 
   (cfg.reels || []).forEach((reel, i) => {
-    if (!reel.src) return;
+    if (!reel.src && !reel.img) return;
     document.querySelectorAll('[data-reel="' + i + '"]').forEach(screen => {
       screen.querySelector('.phone-file')?.remove();
+      const tag = screen.querySelector('.views-tag');
+      if (tag) tag.textContent = (reel.client ? reel.client + ' · ' : '') + (reel.views ? reel.views + ' ▶' : '▶');
+
+      if (reel.img) {
+        // מצב קל: תמונת סטיל של הריל בלבד — כמעט אפס משקל
+        const img = document.createElement('img');
+        img.src = reel.img;
+        img.alt = reel.client || '';
+        img.loading = 'lazy';
+        screen.prepend(img);
+        if (reel.link) {
+          screen.style.cursor = 'pointer';
+          screen.style.pointerEvents = 'auto';
+          screen.addEventListener('click', () => window.open(reel.link, '_blank', 'noopener'));
+        }
+        return;
+      }
+
+      // מצב וידאו: נטען רק כשמרחפים/לוחצים (preload=none) — לא מכביד על טעינת העמוד
       const vid = document.createElement('video');
       vid.src = reel.src;
       vid.muted = true;
       vid.loop = true;
       vid.playsInline = true;
       vid.preload = 'none';
+      if (reel.img) vid.poster = reel.img;
       screen.prepend(vid);
-      const tag = screen.querySelector('.views-tag');
-      if (tag) tag.textContent = (reel.client ? reel.client + ' · ' : '') + (reel.views ? reel.views + ' ▶' : '▶');
-      // דסקטופ: ניגון ב-hover; מובייל: בלחיצה
       screen.addEventListener('pointerenter', () => vid.play().catch(() => {}));
       screen.addEventListener('pointerleave', () => vid.pause());
       screen.addEventListener('click', () => { vid.paused ? vid.play().catch(() => {}) : vid.pause(); });
