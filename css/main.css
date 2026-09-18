@@ -153,7 +153,6 @@ h2 {
 
 .header-logo img {
   height: 30px;
-  mix-blend-mode: multiply;
   display: block;
 }
 
@@ -930,7 +929,7 @@ h2 {
   gap: 24px;
 }
 
-.site-footer img { height: 24px; mix-blend-mode: multiply; }
+.site-footer img { height: 24px; }
 
 .footer-nav {
   display: flex;
