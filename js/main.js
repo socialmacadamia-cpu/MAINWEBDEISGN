@@ -76,22 +76,31 @@
   const heroVid = document.getElementById('heroVid');
   if (heroVid) {
     const freezePct = Math.min(99, Math.max(50, +cfg.heroFreezePct || 85)) / 100;
+    // עוצר קדימה בפריים העצירה בלי לקפוץ אחורה (קפיצה אחורה ב-webm לא אמינה)
+    let frozen = false;
     const freezeAt = () => {
-      if (heroVid.duration && heroVid.currentTime >= heroVid.duration * freezePct) {
+      if (frozen || !heroVid.duration) return;
+      if (heroVid.currentTime >= heroVid.duration * freezePct) {
+        frozen = true;
         heroVid.pause();
-        heroVid.currentTime = heroVid.duration * freezePct;
       }
     };
     heroVid.addEventListener('timeupdate', freezeAt);
-    heroVid.addEventListener('ended', () => {
-      if (heroVid.duration) {
-        heroVid.currentTime = heroVid.duration * freezePct;
-        heroVid.pause();
-      }
-    });
+    // רשת ביטחון: אם בכל זאת הגיע לסוף, להישאר על הפריים האחרון (לא לחזור להתחלה)
+    heroVid.addEventListener('ended', () => { frozen = true; heroVid.pause(); });
     if (reducedMotion) {
-      const seek = () => { heroVid.pause(); heroVid.currentTime = (heroVid.duration || 0) * freezePct; };
-      heroVid.readyState >= 1 ? seek() : heroVid.addEventListener('loadedmetadata', seek);
+      // בלי אנימציה: מדלגים לפריים העצירה בלי ניגון גלוי.
+      // מנגנים בהשתקה ועוצרים ברגע שעברנו את נקודת העצירה — קפיצת currentTime
+      // ישירה על webp/webm לא תמיד נוחתת, אז עדיף לתת לו "לרוץ" ולעצור.
+      const seek = () => {
+        if (!heroVid.duration) { heroVid.addEventListener('loadedmetadata', seek, { once: true }); return; }
+        heroVid.currentTime = heroVid.duration * freezePct;
+        heroVid.play().then(() => {
+          // אם הקפיצה נחתה — עוצרים מיד; אחרת freezeAt יתפוס אותו תוך שנייה
+          if (heroVid.currentTime >= heroVid.duration * freezePct - 0.1) { frozen = true; heroVid.pause(); }
+        }).catch(() => {});
+      };
+      seek();
     } else {
       heroVid.play().catch(() => {});
     }

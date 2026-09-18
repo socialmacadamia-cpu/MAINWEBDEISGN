@@ -29,9 +29,22 @@ python3 -m http.server 8000
 ## איך מחליפים דברים ⭐
 
 ### סרטון הירו
-להחליף את `assets/hero-nut.mp4` בקובץ החדש (לשמור על אותו שם, או לעדכן את ה-`src` ב-`index.html`).
-מומלץ לקודד עם `ffmpeg -movflags +faststart` לטעינה מהירה.
-נקודת העצירה של הסרטון (הפריים שבו הלוגואים באוויר) נשלטת ב-`js/config.js` → `heroFreezePct`.
+הסרטון קיים בשני פורמטים כדי לכסות את כל הדפדפנים, בתוספת תמונת poster:
+- `assets/hero-nut.webm` (VP9, ~2MB) — קל יותר, מועדף ברוב הדפדפנים
+- `assets/hero-nut.mp4` (H.264, ~6MB) — גיבוי (ספארי/iOS ישנים)
+- `assets/hero-poster.jpg` — נראה מיד עד שהסרטון נטען
+
+המקור היה 70MB ב-4K/HEVC; דחסתי ל-2560px H.264/VP9 בלי אובדן איכות מורגש.
+להחלפה: לקודד את הסרטון החדש לשני הפורמטים (למשל עם ffmpeg — ראה למטה) ולהחליף את שני הקבצים.
+נקודת העצירה (הפריים שבו הלוגואים באוויר) נשלטת ב-`js/config.js` → `heroFreezePct` (85% כברירת מחדל).
+
+פקודות הקידוד ששימשו (מ-ffmpeg):
+```bash
+ffmpeg -i מקור.mp4 -vf scale=2560:-2 -c:v libx264 -crf 20 -preset slow -g 12 -pix_fmt yuv420p -an -movflags +faststart hero-nut.mp4
+ffmpeg -i מקור.mp4 -vf scale=2560:-2 -c:v libvpx-vp9 -crf 27 -b:v 0 -g 12 -row-mt 1 -an hero-nut.webm
+ffmpeg -ss 8.5 -i hero-nut.mp4 -frames:v 1 -q:v 3 hero-poster.jpg
+```
+(ה-`-g 12` חשוב — keyframe כל חצי שנייה כדי שהעצירה על הפריים תעבוד חלק.)
 
 ### מספר וואטסאפ
 `js/config.js` → `whatsappNumber` בפורמט בינלאומי בלי + (למשל `972501234567`).
