@@ -71,7 +71,7 @@
     setTimeout(() => revealEls.forEach(el => el.classList.add('revealed')), 5000);
   }
 
-  /* ---------- אודות: פרלקסת עכבר עדינה — העיגול ושמעון זזים בכיוונים הפוכים (עומק) ---------- */
+  /* ---------- אודות: אנימציית כניסה בלבד ---------- */
 
   const aboutStage = document.querySelector('.about-stage');
   if (aboutStage) {
@@ -82,17 +82,6 @@
       new MutationObserver(() => {
         if (aboutStage.classList.contains('revealed')) setTimeout(settle, 1300);
       }).observe(aboutStage, { attributes: true, attributeFilter: ['class'] });
-    }
-    if (!reducedMotion && matchMedia('(hover: hover)').matches) {
-      aboutStage.addEventListener('pointermove', e => {
-        const r = aboutStage.getBoundingClientRect();
-        aboutStage.style.setProperty('--px', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
-        aboutStage.style.setProperty('--py', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
-      });
-      aboutStage.addEventListener('pointerleave', () => {
-        aboutStage.style.setProperty('--px', '0');
-        aboutStage.style.setProperty('--py', '0');
-      });
     }
   }
 
@@ -209,7 +198,7 @@
       phones.forEach(el => {
         const speed = +el.dataset.speed || 1;
         // טווח קטן (~16vh בסיס): מתחילים מעט נמוך ועולים בעדינות. כל טלפון בקצב שלו.
-        const ty = (0.5 - p) * 16 * speed;
+        const ty = (0.55 - p) * 22 * speed;
         el.style.transform = 'translateY(' + ty.toFixed(2) + 'vh)';
       });
     }
