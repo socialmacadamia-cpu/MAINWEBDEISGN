@@ -89,6 +89,15 @@
 
   const heroVid = document.getElementById('heroVid');
   if (heroVid) {
+    // בחירת קובץ לפי מכשיר — כדי שהטלפון לא יוריד את הגרסה הגדולה
+    const variant = mobileQuery.matches ? 'mobile' : 'desktop';
+    heroVid.poster = heroVid.dataset[variant + 'Poster'] || heroVid.poster;
+    [['webm', 'video/webm'], ['mp4', 'video/mp4']].forEach(([ext, type]) => {
+      const src = heroVid.dataset[variant + (ext === 'webm' ? 'Webm' : 'Mp4')];
+      if (!src) return;
+      const s = document.createElement('source'); s.src = src; s.type = type; heroVid.appendChild(s);
+    });
+    heroVid.load();
     const freezePct = Math.min(99, Math.max(50, +cfg.heroFreezePct || 85)) / 100;
     // עוצר קדימה בפריים העצירה בלי לקפוץ אחורה (קפיצה אחורה ב-webm לא אמינה)
     let frozen = false;
