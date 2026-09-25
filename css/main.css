@@ -558,6 +558,21 @@ h2 {
   z-index: 2;
 }
 
+/* תגית צפיות בסגנון טיקטוק כשיש ריל אמיתי */
+.views-tag-live {
+  font-family: var(--font-hebrew);
+  background: rgba(17, 17, 22, 0.55);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  padding: 5px 10px 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  direction: ltr;
+}
+.views-tag-live b { font-family: var(--font-latin); font-weight: 700; font-size: 0.8rem; }
+.views-tag-live span { font-size: 0.68rem; opacity: 0.85; border-left: 1px solid rgba(255,255,255,0.35); padding-left: 6px; }
+
 /* קרוסלת רילים במובייל */
 
 .reel-carousel {

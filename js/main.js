@@ -244,7 +244,10 @@
     document.querySelectorAll('[data-reel="' + i + '"]').forEach(screen => {
       screen.querySelector('.phone-file')?.remove();
       const tag = screen.querySelector('.views-tag');
-      if (tag) tag.textContent = (reel.client ? reel.client + ' · ' : '') + (reel.views ? reel.views + ' ▶' : '▶');
+      if (tag) {
+        tag.innerHTML = (reel.views ? '<b>' + reel.views + '</b> ▶' : '') + (reel.client ? '<span>' + reel.client + '</span>' : '');
+        tag.classList.add('views-tag-live');
+      }
 
       if (reel.img) {
         // מצב קל: תמונת סטיל של הריל בלבד — כמעט אפס משקל

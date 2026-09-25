@@ -29,9 +29,9 @@ window.SITE_CONFIG = {
   //   וידאו (נטען רק ב-hover):  { src: 'assets/reels/reel-1.mp4', img: 'תמונת פתיחה', client: '...', views: '...' }
   // כל עוד הכל ריק — מוצג placeholder מסומן.
   reels: [
-    { img: '', src: '', client: '', views: '', link: '' },
-    { img: '', src: '', client: '', views: '', link: '' },
-    { img: '', src: '', client: '', views: '', link: '' },
+    { img: 'assets/reels/reel-1.webp', client: 'ספיד וואש', views: '1.4M', link: '' },
+    { img: 'assets/reels/reel-2.webp', client: 'wally_il', views: '129K', link: '' },
+    { img: 'assets/reels/reel-3.webp', client: 'שמעון שרון', views: '22.6K', link: '' },
     { img: '', src: '', client: '', views: '', link: '' },
     { img: '', src: '', client: '', views: '', link: '' },
     { img: '', src: '', client: '', views: '', link: '' }
