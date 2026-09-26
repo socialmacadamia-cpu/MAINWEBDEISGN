@@ -200,16 +200,23 @@
 
   function onScrollEffects() {
     // טלפונים מרחפים (דסקטופ בלבד): בלי כניסות — דריפט עדין כלפי מעלה, כל אחד בקצב אחר
-    if (!reducedMotion && !mobileQuery.matches && phones.length && workStage) {
+    if (!reducedMotion && workStage) {
       const r = workStage.getBoundingClientRect();
       // p: 0 כשהסקשן נכנס מלמטה, 1 כשהוא יוצא למעלה — תנועה רציפה, בלי הצמדה
       const p = Math.max(0, Math.min(1, (innerHeight - r.top) / (innerHeight + r.height)));
-      phones.forEach(el => {
-        const speed = +el.dataset.speed || 1;
-        // טווח קטן (~16vh בסיס): מתחילים מעט נמוך ועולים בעדינות. כל טלפון בקצב שלו.
-        const ty = (0.55 - p) * 22 * speed;
-        el.style.transform = 'translateY(' + ty.toFixed(2) + 'vh)';
-      });
+      if (!mobileQuery.matches && phones.length) {
+        phones.forEach(el => {
+          const speed = +el.dataset.speed || 1;
+          const ty = (0.55 - p) * 22 * speed;
+          el.style.transform = 'translateY(' + ty.toFixed(2) + 'vh)';
+        });
+      } else if (mobileQuery.matches) {
+        // מובייל: רשת הרילים נעה בעדינות — כל עמודה בקצב שלה
+        document.querySelectorAll('.reel-carousel .reel-item').forEach((el, i) => {
+          const speed = i % 2 === 0 ? 0.6 : 1.15;
+          el.style.transform = 'translateY(' + ((0.5 - p) * 9 * speed).toFixed(2) + 'vh)';
+        });
+      }
     }
 
     // קו התהליך + הדלקת תחנות + חשיפת שורות הטקסט

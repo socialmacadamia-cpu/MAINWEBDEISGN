@@ -1426,9 +1426,8 @@ h2 {
     padding: 12px 6px 40px;
     scroll-snap-type: none;
   }
-  .reel-carousel .reel-item { width: auto; scroll-snap-align: none; }
-  .reel-carousel .reel-item:nth-child(odd) { transform: rotate(-2.5deg); }
-  .reel-carousel .reel-item:nth-child(even) { transform: translateY(26px) rotate(2.5deg); }
+  .reel-carousel .reel-item { width: auto; scroll-snap-align: none; will-change: transform; }
+  .reel-carousel .reel-item:nth-child(even) { margin-top: 30px; }
 
   /* אנימציית התהליך במובייל: כניסה מלמטה (הזזה אופקית גלשה מהמסך) */
   .process-animate .step-content { --from: 0; transform: translateY(18px); }
