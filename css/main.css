@@ -379,6 +379,86 @@ h2 {
 }
 .scroll-hint.hidden { opacity: 0; }
 
+/* באדג' גלילה מעגלי — הטקסט מסתובב סביב האגוז */
+.scroll-badge {
+  width: 92px;
+  height: 92px;
+  animation: none;
+  display: grid;
+  place-items: center;
+}
+.scroll-badge svg {
+  position: absolute;
+  inset: 0;
+  animation: spin 14s linear infinite;
+}
+.scroll-badge-text {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  fill: var(--text-sub);
+  direction: ltr; /* חובה: ב-RTL כרום מפיל טקסט עברי על textPath מחוץ למסלול */
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* מילות רפאים מאחורי סקשנים */
+.has-ghost { position: relative; overflow: clip; }
+.has-ghost > * { position: relative; }
+.ghost-word {
+  position: absolute;
+  top: 30px;
+  inset-inline-end: -0.06em;
+  font-family: var(--font-display);
+  font-size: clamp(7rem, 17vw, 15rem);
+  line-height: 1;
+  color: rgba(27, 21, 36, 0.034);
+  user-select: none;
+  pointer-events: none;
+}
+.ghost-word-2 { top: auto; bottom: 10px; inset-inline-end: auto; inset-inline-start: -0.06em; }
+
+/* אינטרלוד הצהרה */
+.statement {
+  position: relative;
+  overflow: hidden;
+  min-height: 62vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 90px 6vw;
+  background: var(--bg-dark);
+}
+.statement-video {
+  position: absolute;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  object-fit: cover;
+  filter: blur(5px) saturate(1.15);
+  transform: scale(1.04);
+}
+.statement-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(640px 420px at 50% 60%, rgba(124, 58, 237, 0.28), transparent 70%),
+    linear-gradient(180deg, rgba(23, 17, 34, 0.86), rgba(23, 17, 34, 0.78));
+}
+.statement-line {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4.6vw, 3.9rem);
+  line-height: 1.35;
+  color: #F3EFE8;
+  margin: 0;
+  text-wrap: balance;
+}
+
+@media (max-width: 880px) {
+  .statement { min-height: 46vh; }
+  .ghost-word { font-size: clamp(5rem, 26vw, 8rem); }
+}
+
 @keyframes bob {
   0%, 100% { transform: translateX(50%) translateY(0); }
   50% { transform: translateX(50%) translateY(8px); }

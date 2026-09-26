@@ -152,6 +152,16 @@
     }, { passive: true });
   }
 
+  /* ---------- אינטרלוד: הווידאו מתנגן רק כשהוא על המסך ---------- */
+
+  const stVid = document.querySelector('.statement-video');
+  if (stVid) {
+    new IntersectionObserver(entries => entries.forEach(en => {
+      if (en.isIntersecting) { stVid.play().catch(() => {}); }
+      else stVid.pause();
+    }), { threshold: 0.15 }).observe(stVid);
+  }
+
   /* ---------- שירותים: 3D tilt לכיוון העכבר ---------- */
 
   if (!reducedMotion) {

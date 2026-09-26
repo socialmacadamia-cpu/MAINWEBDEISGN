@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Assistant:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/main.css?v=b84f9a3">
+<link rel="stylesheet" href="css/main.css?v=1790465063">
 </head>
 <body>
 
@@ -62,7 +62,13 @@
       </div>
     </div>
   </div>
-  <div class="scroll-hint">גלול לפצח ↓</div>
+  <div class="scroll-hint scroll-badge" aria-hidden="true">
+    <svg viewBox="0 0 100 100" width="92" height="92">
+      <defs><path id="circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+      <text class="scroll-badge-text"><textPath href="#circ">גלול לפצח · גלול לפצח · גלול לפצח · </textPath></text>
+    </svg>
+    <img src="assets/icons/nut-4.webp" alt="" width="30" height="30">
+  </div>
 </section>
 
 <!-- ===== פס לוגו לקוחות ===== -->
@@ -92,7 +98,8 @@
 </section>
 
 <!-- ===== שירותים ===== -->
-<section id="services" class="section">
+<section id="services" class="section has-ghost">
+  <span class="ghost-word" aria-hidden="true">סושיאל</span>
   <p class="eyebrow">מה אנחנו עושים</p>
   <h2>מה <span class="grad-text">מפצחים</span> אצלנו</h2>
   <p class="section-sub">חמישה תחומים, מטרה אחת: סושיאל שעובד בשבילך.</p>
@@ -212,7 +219,8 @@
 </section>
 
 <!-- ===== התהליך ===== -->
-<section id="process" class="section">
+<section id="process" class="section has-ghost">
+  <span class="ghost-word ghost-word-2" aria-hidden="true">פיצוח</span>
   <p class="eyebrow">התהליך שלנו</p>
   <h2>איך <span class="grad-text">מפצחים</span> אגוז קשה</h2>
   <p class="section-sub">אותה שיטה, בין אם אתה מסעדה שכונתית או מותג ארצי.</p>
@@ -270,6 +278,17 @@
       <div></div>
     </div>
   </div>
+</section>
+
+
+<!-- ===== אינטרלוד: הצהרת מותג על פוטג' האגוז ===== -->
+<section class="statement">
+  <video class="statement-video" muted loop playsinline preload="none">
+    <source src="assets/hero-nut.webm" type="video/webm">
+    <source src="assets/hero-nut.mp4" type="video/mp4">
+  </video>
+  <div class="statement-scrim"></div>
+  <p class="statement-line" data-reveal>יש עסקים שמפרסמים.<br>ויש עסקים <span class="grad-text grad-live">שמפצחים</span>.</p>
 </section>
 
 <!-- ===== חבילות ===== -->
@@ -529,7 +548,7 @@
   <svg viewBox="0 0 24 24" width="28" height="28"><path d="M12 3a9 9 0 0 0-7.6 13.8L3 21l4.4-1.3A9 9 0 1 0 12 3z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8.5c.5 3 3.5 6 6.5 6.5l.5-2-2-1-1 1c-1-.5-2.5-2-3-3l1-1-1-2z" fill="#fff"/></svg>
 </a>
 
-<script src="js/config.js?v=b84f9a3"></script>
-<script src="js/main.js?v=b84f9a3"></script>
+<script src="js/config.js?v=1790465063"></script>
+<script src="js/main.js?v=1790465063"></script>
 </body>
 </html>
