@@ -46,9 +46,12 @@
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.querySelector('.mobile-menu');
   if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+    });
     mobileMenu.querySelectorAll('a').forEach(a =>
-      a.addEventListener('click', () => mobileMenu.classList.remove('open'))
+      a.addEventListener('click', () => { mobileMenu.classList.remove('open'); hamburger.classList.remove('open'); })
     );
     mobileQuery.addEventListener('change', () => mobileMenu.classList.remove('open'));
   }
@@ -127,6 +130,18 @@
     } else {
       heroVid.play().catch(() => {});
     }
+  }
+
+  /* ---------- Spotlight: בורדר שנדלק סביב הסמן בכרטיסים ---------- */
+
+  if (matchMedia('(hover: hover)').matches) {
+    document.addEventListener('pointermove', e => {
+      const card = e.target.closest ? e.target.closest('.service-card, .plan-card') : null;
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    }, { passive: true });
   }
 
   /* ---------- שירותים: 3D tilt לכיוון העכבר ---------- */
