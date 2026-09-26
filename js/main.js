@@ -207,14 +207,14 @@
       if (!mobileQuery.matches && phones.length) {
         phones.forEach(el => {
           const speed = +el.dataset.speed || 1;
-          const ty = (0.55 - p) * 22 * speed;
+          const ty = (0.55 - p) * 30 * speed;
           el.style.transform = 'translateY(' + ty.toFixed(2) + 'vh)';
         });
       } else if (mobileQuery.matches) {
         // מובייל: רשת הרילים נעה בעדינות — כל עמודה בקצב שלה
         document.querySelectorAll('.reel-carousel .reel-item').forEach((el, i) => {
           const speed = i % 2 === 0 ? 0.6 : 1.15;
-          el.style.transform = 'translateY(' + ((0.5 - p) * 9 * speed).toFixed(2) + 'vh)';
+          el.style.transform = 'translateY(' + ((0.5 - p) * 14 * speed).toFixed(2) + 'vh)';
         });
       }
     }
@@ -252,8 +252,10 @@
       screen.querySelector('.phone-file')?.remove();
       const tag = screen.querySelector('.views-tag');
       if (tag) {
-        tag.innerHTML = (reel.views ? '<b>' + reel.views + '</b> ▶' : '') + (reel.client ? '<span>' + reel.client + '</span>' : '');
+        tag.innerHTML = '<i class="vt-play"></i>' + (reel.views ? '<b>' + reel.views + '</b>' : '') + (reel.client ? '<span>' + reel.client + '</span>' : '');
         tag.classList.add('views-tag-live');
+        const frame = screen.closest('.phone-frame');
+        if (frame) frame.appendChild(tag); // מחוץ למסך — יושב על פינת המסגרת
       }
 
       if (reel.img) {

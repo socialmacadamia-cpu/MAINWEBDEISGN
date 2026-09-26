@@ -558,20 +558,54 @@ h2 {
   z-index: 2;
 }
 
-/* תגית צפיות בסגנון טיקטוק כשיש ריל אמיתי */
+/* תגית צפיות: צ'יפ לבן נקי שיוצא מהפינה העליונה של הטלפון */
+.phone-frame { position: relative; }
 .views-tag-live {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  bottom: auto;
+  left: auto;
+  z-index: 3;
   font-family: var(--font-hebrew);
-  background: rgba(17, 17, 22, 0.55);
-  color: #fff;
-  backdrop-filter: blur(6px);
-  padding: 5px 10px 5px 8px;
+  background: #fff;
+  color: var(--text-main);
+  border-radius: 999px;
+  padding: 6px 12px 6px 8px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   direction: ltr;
+  backdrop-filter: none;
+  box-shadow: 0 8px 22px rgba(124, 58, 237, 0.28), 0 2px 6px rgba(17, 17, 22, 0.1);
 }
-.views-tag-live b { font-family: var(--font-latin); font-weight: 700; font-size: 0.8rem; }
-.views-tag-live span { font-size: 0.68rem; opacity: 0.85; border-left: 1px solid rgba(255,255,255,0.35); padding-left: 6px; }
+.views-tag-live .vt-play {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--grad);
+  flex-shrink: 0;
+  position: relative;
+}
+.views-tag-live .vt-play::after {
+  content: '';
+  position: absolute;
+  left: 55%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 4.5px 0 4.5px 7px;
+  border-color: transparent transparent transparent #fff;
+}
+.views-tag-live b { font-family: var(--font-latin); font-weight: 700; font-size: 0.92rem; }
+.views-tag-live span {
+  font-size: 0.7rem;
+  color: var(--text-sub);
+  border-left: 1px solid #E5E3DE;
+  padding-left: 7px;
+  white-space: nowrap;
+}
+.views-tag-live b { white-space: nowrap; }
 
 /* קרוסלת רילים במובייל */
 
