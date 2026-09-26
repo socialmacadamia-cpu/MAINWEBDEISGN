@@ -1706,3 +1706,69 @@ h2 {
   .grad-live { animation: none; }
   .service-card, .floating-phone { transform: none !important; }
 }
+
+/* ---------- פס הפיד השבור ---------- */
+
+.feed-wrap {
+  overflow: hidden; /* חותך את הבליטה של הפס המוטה */
+  padding: 30px 0;
+  margin: -34px 0 -20px;
+  pointer-events: none;
+}
+
+.feed-strip {
+  position: relative;
+  z-index: 2;
+  transform: rotate(-2.5deg);
+  margin-inline: -60px;
+}
+
+.feed-strip-inner {
+  background: linear-gradient(105deg, #201631, #33204F 55%, #241631);
+  border-block: 1px solid rgba(168, 85, 247, 0.35);
+  box-shadow: 0 18px 50px rgba(124, 58, 237, 0.22);
+  overflow: hidden;
+  padding: 15px 0;
+}
+
+.feed-track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: mq 46s linear infinite;
+  padding: 0 20px;
+}
+
+.feed-item {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  color: #E9E2F5;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+}
+.feed-item b {
+  font-family: var(--font-latin);
+  font-weight: 700;
+  color: #fff;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+.feed-item:nth-child(4n) { background: rgba(168, 85, 247, 0.16); border-color: rgba(168, 85, 247, 0.4); }
+.feed-item:nth-child(7n) { background: rgba(192, 155, 102, 0.14); border-color: rgba(192, 155, 102, 0.4); }
+
+@media (max-width: 880px) {
+  .feed-wrap { padding: 24px 0; margin: -26px 0 -14px; }
+  .feed-strip { transform: rotate(-3.5deg); margin-inline: -40px; }
+  .feed-strip-inner { padding: 11px 0; }
+  .feed-item { font-size: 0.8rem; padding: 6px 13px; }
+  .feed-track { animation-duration: 34s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feed-track { animation-duration: 200s; }
+}
