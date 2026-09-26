@@ -30,12 +30,12 @@ window.SITE_CONFIG = {
   // כל עוד הכל ריק — מוצג placeholder מסומן.
   reels: [
     // סדר = מיקום: 0 ימין-עליון, 1 שמאל-עליון, 2 ימין-אמצע, 3 שמאל-אמצע, 4 ימין-תחתון, 5 שמאל-תחתון
-    { img: 'assets/reels/reel-3.webp', client: 'שמעון שרון', views: '764K', link: 'https://www.instagram.com/reel/DKFKKwso0re/' },
-    { img: 'assets/reels/reel-1.webp', client: 'ספיד וואש', views: '1M',   link: 'https://vt.tiktok.com/ZSbJejP1T/' },
-    { img: 'assets/reels/reel-2.webp', client: 'וולי',      views: '130K', link: 'https://vt.tiktok.com/ZSbJeFJJk/' },
-    { img: '', client: 'ספיד וואש', views: '1.4M', link: 'https://vt.tiktok.com/ZSbJJEEuc/' }, // ממתין לצילום מסך
-    { img: '', client: 'שמעון שרון', views: '1.2M', link: 'https://vt.tiktok.com/ZSbJJxasM/' }, // ממתין לצילום מסך
-    { img: '', client: 'ספיד וואש', views: '1.3M', link: 'https://vt.tiktok.com/ZSbJJcc3u/' }  // ממתין לצילום מסך
+    { img: 'assets/reels/r1.webp', client: 'שמעון שרון', views: '764K', link: 'https://www.instagram.com/reel/DKFKKwso0re/' },
+    { img: 'assets/reels/r2.webp', client: 'ספיד וואש', views: '1M',   link: 'https://vt.tiktok.com/ZSbJejP1T/' },
+    { img: 'assets/reels/r3.webp', client: 'וולי',      views: '130K', link: 'https://vt.tiktok.com/ZSbJeFJJk/' },
+    { img: 'assets/reels/r4.webp', client: 'ספיד וואש', views: '1.4M', link: 'https://vt.tiktok.com/ZSbJJEEuc/' },
+    { img: 'assets/reels/r5.webp', client: 'שמעון שרון', views: '1.2M', link: 'https://vt.tiktok.com/ZSbJJxasM/' },
+    { img: 'assets/reels/r6.webp', client: 'ספיד וואש', views: '1.3M', link: 'https://vt.tiktok.com/ZSbJJcc3u/' }
   ],
 
   // לוגואי לקוחות ל-marquee. כשיש קבצים:
