@@ -22,6 +22,14 @@
   });
 
   const socialMap = { instagram: cfg.instagramUrl, tiktok: cfg.tiktokUrl, facebook: cfg.facebookUrl };
+
+  // הרשתות של שמעון (סקשן האודות): מציג רק כפתורים שיש להם לינק
+  const shimon = cfg.shimonSocials || {};
+  document.querySelectorAll('.social-row .soc').forEach(a => {
+    const url = shimon[a.dataset.soc];
+    if (url) a.href = url;
+    else a.style.display = 'none';
+  });
   document.querySelectorAll('[data-social]').forEach(a => {
     const url = socialMap[a.dataset.social];
     if (url) a.href = url;
@@ -76,7 +84,7 @@
 
   /* ---------- אודות: אנימציית כניסה בלבד ---------- */
 
-  const aboutStage = document.querySelector('.about-stage');
+  const aboutStage = document.querySelector('.about-stage, .about-stage2');
   if (aboutStage) {
     // אחרי אנימציית הכניסה — מעברים קצרים כדי שהפרלקסה תגיב מיד
     const settle = () => aboutStage.classList.add('settled');

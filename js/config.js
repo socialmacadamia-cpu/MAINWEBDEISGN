@@ -9,10 +9,18 @@ window.SITE_CONFIG = {
   // כל עוד ריק — כפתורי הוואטסאפ מפנים לטופס.
   whatsappNumber: '',
 
-  // לינקים לרשתות
+  // לינקים לרשתות של מקדמיה
   instagramUrl: 'https://www.instagram.com/macadamia.il',
   tiktokUrl: '',
   facebookUrl: '',
+
+  // הרשתות האישיות של שמעון (סקשן "מי מאחורי הפיצוח") — כפתור בלי לינק לא מוצג
+  shimonSocials: {
+    instagram: 'https://www.instagram.com/shimonsharon1/',
+    tiktok: '',   // להשלים: לינק לפרופיל הטיקטוק של שמעון
+    youtube: '',  // להשלים אם יש
+    facebook: ''  // להשלים אם יש
+  },
 
   // הירו: באיזה אחוז מאורך הסרטון לעצור (הפריים שבו הלוגואים באוויר)
   heroFreezePct: 72,
